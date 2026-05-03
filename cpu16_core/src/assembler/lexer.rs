@@ -1,4 +1,4 @@
-//! Lexer, breaks up a line of assembly code into a vector of tokens.
+//! Breaks up a line of assembly code into a vector of tokens.
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Token {
