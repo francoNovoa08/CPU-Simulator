@@ -56,8 +56,9 @@ export function useCpu(): UseCpuReturn {
         let cancelled = false;
 
         async function load() {
+            const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
             const wasm = await import("@/public/wasm/cpu16_core.js");
-            await wasm.default();
+            await wasm.default(`${base}/wasm/cpu16_core_bg.wasm`);
             if (cancelled) return;
             cpuRef.current = new wasm.Cpu();
             setWasmReady(true);
