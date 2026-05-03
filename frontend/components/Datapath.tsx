@@ -67,9 +67,12 @@ export default function Datapath({
           transition: stroke 0.1s, filter 0.1s;
         }
         .wire-active {
-          stroke: #a5b4fc;
-          filter: drop-shadow(0 0 4px #a5b4fc);
-          animation: wire-pulse ${HIGHLIGHT_DURATION}ms ease-out forwards;
+            stroke: #3b82f6;
+            stroke-dasharray: 6 6;
+            animation: wire-flow 0.8s linear infinite;
+        }
+        @keyframes wire-flow {
+            to { stroke-dashoffset: -12; }
         }
         @keyframes wire-pulse {
           0%   { stroke: #c4b5fd; filter: drop-shadow(0 0 8px #c4b5fd); }
@@ -136,6 +139,7 @@ export default function Datapath({
             <svg
                 ref={svgRef}
                 viewBox="0 0 520 520"
+                preserveAspectRatio="xMidYMid meet"
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-full w-full"
                 style={{ maxHeight: "100%", maxWidth: "100%" }}

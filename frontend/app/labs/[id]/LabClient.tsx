@@ -1,108 +1,196 @@
 "use client";
 
+import {
+    BookOpen,
+    Target,
+    Activity,
+    AlertTriangle,
+    Lightbulb,
+    ChevronRight,
+    ArrowLeft,
+    ArrowRight,
+    PanelLeftClose,
+    PanelLeftOpen,
+} from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 import EmulatorShell from "@/components/EmulatorShell";
 import { LabData } from "@/lib/labData";
-import Link from "next/link";
 
 export default function LabClient({ lab }: { lab: LabData }) {
-  return (
-    <div className="flex h-full w-full overflow-hidden">
-      <aside className="flex w-80 shrink-0 flex-col overflow-y-auto border-r border-gray-800 bg-gray-950">
-        <div className="p-5">
+    const labIds = [1, 2, 3];
+    const [panelOpen, setPanelOpen] = useState(true);
 
-          <div className="mb-1 text-xs font-semibold uppercase tracking-widest text-indigo-400">
-            Lab {lab.id}
-          </div>
-          <h1 className="mb-4 text-lg font-bold text-gray-100">{lab.title}</h1>
+    return (
+        <div className="flex h-full w-full overflow-hidden">
+            <button
+                onClick={() => setPanelOpen((o) => !o)}
+                className="absolute left-0 cursor-pointer top-1/2 z-20 -translate-y-1/2 translate-x-0 flex items-center justify-center w-5 h-12 rounded-r bg-zinc-800 border border-l-0 border-zinc-700 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700 hover:w-6 hover:shadow-[2px_0_10px_rgba(0,0,0,0.3)] active:scale-95 transition-all duration-200"
+                style={{
+                    left: panelOpen ? "340px" : "0px",
+                    transition: "left 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+                }}
+                title={panelOpen ? "Hide lab panel" : "Show lab panel"}
+            >
+                {panelOpen ? (
+                    <PanelLeftClose size={12} />
+                ) : (
+                    <PanelLeftOpen size={12} />
+                )}
+            </button>
 
-          <section className="mb-5">
-            <h2 className="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-500">
-              Learning Objectives
-            </h2>
-            <ul className="space-y-2">
-              {lab.objectives.map((obj, i) => (
-                <li key={i} className="flex gap-2 text-xs text-gray-300">
-                  <span className="mt-0.5 shrink-0 text-indigo-400">▸</span>
-                  <span>{obj}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
+            <aside
+                className="flex shrink-0 flex-col border-r border-zinc-800/60 bg-[#121214] shadow-[4px_0_24px_rgba(0,0,0,0.2)] transition-all duration-300 ease-in-out overflow-hidden"
+                style={{
+                    width: panelOpen ? "340px" : "0px",
+                    opacity: panelOpen ? 1 : 0,
+                }}
+            >
+                <div className="flex h-full w-85 flex-col">
+                    <div className="flex-1 overflow-y-auto thin-scrollbar p-6">
+                        <header className="mb-8">
+                            <div className="flex items-center gap-2 mb-2 text-xs font-bold tracking-widest text-blue-500 uppercase">
+                                <BookOpen size={14} />
+                                Lab {lab.id}
+                            </div>
+                            <h1 className="text-xl font-semibold text-zinc-100 tracking-tight leading-snug">
+                                {lab.title}
+                            </h1>
+                        </header>
 
-          {lab.wiresToWatch && (
-            <section className="mb-5">
-              <h2 className="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-500">
-                Wires to Watch
-              </h2>
-              <div className="flex flex-wrap gap-1">
-                {lab.wiresToWatch.map(w => (
-                  <span
-                    key={w}
-                    className="rounded bg-indigo-950 px-2 py-0.5 font-mono text-xs text-indigo-300 border border-indigo-900"
-                  >
-                    {w}
-                  </span>
-                ))}
-              </div>
-            </section>
-          )}
+                        <section className="mb-8">
+                            <h2 className="flex items-center gap-2 mb-3 text-xs font-bold tracking-widest text-zinc-500 uppercase">
+                                <Target size={14} />
+                                Learning Objectives
+                            </h2>
+                            <ul className="space-y-2.5">
+                                {lab.objectives.map((obj, i) => (
+                                    <li
+                                        key={i}
+                                        className="flex gap-3 text-sm text-zinc-400 leading-relaxed hover:text-zinc-300 transition-colors duration-200"
+                                    >
+                                        <span className="mt-1.5 shrink-0 w-1.5 h-1.5 rounded-full bg-blue-500/50 shadow-[0_0_5px_rgba(59,130,246,0.5)]" />
+                                        <span>{obj}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </section>
 
-          <section className="mb-5">
-            <h2 className="mb-2 text-xs font-semibold uppercase tracking-widest text-gray-500">
-              Guided Questions
-            </h2>
-            <ol className="space-y-3">
-              {lab.questions.map((q, i) => (
-                <li key={i} className="text-xs text-gray-300">
-                  <span className="font-semibold text-gray-400">{i + 1}. </span>
-                  {q}
-                </li>
-              ))}
-            </ol>
-          </section>
+                        {lab.wiresToWatch && (
+                            <section className="mb-8">
+                                <h2 className="flex items-center gap-2 mb-3 text-xs font-bold tracking-widest text-zinc-500 uppercase">
+                                    <Activity size={14} />
+                                    Wires to Watch
+                                </h2>
+                                <div className="flex flex-wrap gap-2">
+                                    {lab.wiresToWatch.map((w) => (
+                                        <span
+                                            key={w}
+                                            className="rounded bg-blue-500/10 px-2 py-1 font-mono text-[11px] text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 hover:border-blue-500/40 transition-colors duration-200 cursor-default"
+                                        >
+                                            {w}
+                                        </span>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
 
-          {lab.challenge && (
-            <section className="mb-5 rounded border border-amber-900 bg-amber-950/40 p-3">
-              <h2 className="mb-1 text-xs font-semibold uppercase tracking-widest text-amber-500">
-                Challenge
-              </h2>
-              <p className="text-xs text-amber-200">{lab.challenge}</p>
-            </section>
-          )}
+                        <section className="mb-8">
+                            <h2 className="flex items-center gap-2 mb-3 text-xs font-bold tracking-widest text-zinc-500 uppercase">
+                                <BookOpen size={14} />
+                                Guided Questions
+                            </h2>
+                            <ol className="space-y-3">
+                                {lab.questions.map((q, i) => (
+                                    <li
+                                        key={i}
+                                        className="flex gap-2 text-sm text-zinc-400 leading-relaxed hover:text-zinc-300 transition-colors duration-200"
+                                    >
+                                        <span className="font-mono text-zinc-600 select-none shrink-0">
+                                            {i + 1}.
+                                        </span>
+                                        <span>{q}</span>
+                                    </li>
+                                ))}
+                            </ol>
+                        </section>
 
-          {lab.hint && (
-            <details className="mb-5">
-              <summary className="cursor-pointer text-xs font-semibold uppercase tracking-widest text-gray-600 hover:text-gray-400">
-                Hint ▸
-              </summary>
-              <p className="mt-2 text-xs text-gray-400">{lab.hint}</p>
-            </details>
-          )}
+                        {lab.challenge && (
+                            <section className="mb-8 rounded-lg border border-amber-500/20 bg-amber-500/5 overflow-hidden transition-all duration-300 hover:bg-amber-500/10 hover:border-amber-500/30">
+                                <div className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 border-b border-amber-500/10">
+                                    <AlertTriangle
+                                        size={14}
+                                        className="text-amber-500"
+                                    />
+                                    <h2 className="text-xs font-bold uppercase tracking-widest text-amber-500">
+                                        Challenge
+                                    </h2>
+                                </div>
+                                <p className="p-4 text-sm text-amber-200/80 leading-relaxed">
+                                    {lab.challenge}
+                                </p>
+                            </section>
+                        )}
 
-          <div className="flex justify-between pt-2 border-t border-gray-800">
-            {lab.id > 1 ? (
-              <Link
-                href={`/labs/${lab.id - 1}`}
-                className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
-              >
-                ← Lab {lab.id - 1}
-              </Link>
-            ) : <span />}
-            {lab.id < 3 ? (
-              <Link
-                href={`/labs/${lab.id + 1}`}
-                className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
-              >
-                Lab {lab.id + 1} →
-              </Link>
-            ) : <span />}
-          </div>
+                        {lab.hint && (
+                            <details className="group rounded-lg border border-zinc-800 bg-zinc-900/50 transition-all duration-200 hover:border-zinc-700">
+                                <summary className="flex items-center gap-2 cursor-pointer p-3 text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-zinc-200 transition-colors list-none">
+                                    <Lightbulb
+                                        size={14}
+                                        className="text-emerald-500"
+                                    />
+                                    Need a hint?
+                                    <ChevronRight
+                                        size={14}
+                                        className="ml-auto transition-transform duration-300 group-open:rotate-90"
+                                    />
+                                </summary>
+                                <div className="px-4 pb-4 pt-1 text-sm text-zinc-400 leading-relaxed border-t border-zinc-800/50">
+                                    {lab.hint}
+                                </div>
+                            </details>
+                        )}
+                    </div>
+
+                    <div className="flex items-center justify-between p-4 border-t border-zinc-800/60 bg-[#121214]">
+                        {lab.id > 1 ? (
+                            <Link
+                                href={`/labs/${lab.id - 1}`}
+                                className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-zinc-300 hover:-translate-x-1 active:scale-95 transition-all duration-200"
+                            >
+                                <ArrowLeft size={14} /> Prev
+                            </Link>
+                        ) : (
+                            <span className="w-15" />
+                        )}
+                        <div className="flex gap-1.5">
+                            {labIds.map((n) => (
+                                <span
+                                    key={n}
+                                    className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${n === lab.id ? "bg-blue-500 scale-125" : "bg-zinc-700"}`}
+                                />
+                            ))}
+                        </div>
+                        {lab.id < 3 ? (
+                            <Link
+                                href={`/labs/${lab.id + 1}`}
+                                className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-zinc-300 hover:translate-x-1 active:scale-95 transition-all duration-200"
+                            >
+                                Next <ArrowRight size={14} />
+                            </Link>
+                        ) : (
+                            <span className="w-15" />
+                        )}
+                    </div>
+                </div>
+            </aside>
+
+            <div className="flex flex-1 overflow-hidden">
+                <EmulatorShell
+                    initialProgram={lab.starterProgram}
+                    lockedProgram
+                />
+            </div>
         </div>
-      </aside>
-
-      <div className="flex flex-1 overflow-hidden">
-        <EmulatorShell initialProgram={lab.starterProgram} lockedProgram />
-      </div>
-    </div>
-  );
+    );
 }

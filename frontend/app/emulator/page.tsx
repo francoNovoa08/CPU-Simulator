@@ -9,7 +9,7 @@ HALT`;
 
 export default function EmulatorPage() {
   return (
-    <div className="h-screen w-screen">
+    <div className="h-screen w-screen overflow-hidden">
       <EmulatorShell initialProgram={STARTER_PROGRAM} />
     </div>
   );
