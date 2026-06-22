@@ -25,7 +25,7 @@ export default function LabClient({ lab }: { lab: LabData }) {
         <div className="flex h-full w-full overflow-hidden">
             <button
                 onClick={() => setPanelOpen((o) => !o)}
-                className="absolute left-0 cursor-pointer top-1/2 z-20 -translate-y-1/2 translate-x-0 flex items-center justify-center w-5 h-12 rounded-r bg-zinc-800 border border-l-0 border-zinc-700 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700 hover:w-6 hover:shadow-[2px_0_10px_rgba(0,0,0,0.3)] active:scale-95 transition-all duration-200"
+                className="absolute left-0 cursor-pointer top-1/2 z-20 -translate-y-1/2 flex items-center justify-center w-5 h-12 rounded-r bg-zinc-800 border border-l-0 border-zinc-700 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700 active:scale-95 transition-colors"
                 style={{
                     left: panelOpen ? "340px" : "0px",
                     transition: "left 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -49,7 +49,7 @@ export default function LabClient({ lab }: { lab: LabData }) {
                 <div className="flex h-full w-85 flex-col">
                     <div className="flex-1 overflow-y-auto thin-scrollbar p-6">
                         <header className="mb-8">
-                            <div className="flex items-center gap-2 mb-2 text-xs font-bold tracking-widest text-blue-500 uppercase">
+                            <div className="flex items-center gap-2 mb-2 text-xs font-bold tracking-widest text-zinc-500 uppercase"></div><div className="flex items-center gap-2 mb-2 text-xs font-bold tracking-widest text-blue-500 uppercase">
                                 <BookOpen size={14} />
                                 Lab {lab.id}
                             </div>
@@ -69,7 +69,7 @@ export default function LabClient({ lab }: { lab: LabData }) {
                                         key={i}
                                         className="flex gap-3 text-sm text-zinc-400 leading-relaxed hover:text-zinc-300 transition-colors duration-200"
                                     >
-                                        <span className="mt-1.5 shrink-0 w-1.5 h-1.5 rounded-full bg-blue-500/50 shadow-[0_0_5px_rgba(59,130,246,0.5)]" />
+                                        <span className="mt-1.5 shrink-0 w-1.5 h-1.5 rounded-full bg-zinc-600" />
                                         <span>{obj}</span>
                                     </li>
                                 ))}
@@ -86,7 +86,7 @@ export default function LabClient({ lab }: { lab: LabData }) {
                                     {lab.wiresToWatch.map((w) => (
                                         <span
                                             key={w}
-                                            className="rounded bg-blue-500/10 px-2 py-1 font-mono text-[11px] text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 hover:border-blue-500/40 transition-colors duration-200 cursor-default"
+                                            className="rounded bg-zinc-800 px-2 py-1 font-mono text-[11px] text-zinc-300 border border-zinc-700/50"
                                         >
                                             {w}
                                         </span>
@@ -104,7 +104,7 @@ export default function LabClient({ lab }: { lab: LabData }) {
                                 {lab.questions.map((q, i) => (
                                     <li
                                         key={i}
-                                        className="flex gap-2 text-sm text-zinc-400 leading-relaxed hover:text-zinc-300 transition-colors duration-200"
+                                        className="flex gap-2 text-sm text-zinc-400 leading-relaxed"
                                     >
                                         <span className="font-mono text-zinc-600 select-none shrink-0">
                                             {i + 1}.
@@ -116,7 +116,7 @@ export default function LabClient({ lab }: { lab: LabData }) {
                         </section>
 
                         {lab.challenge && (
-                            <section className="mb-8 rounded-lg border border-amber-500/20 bg-amber-500/5 overflow-hidden transition-all duration-300 hover:bg-amber-500/10 hover:border-amber-500/30">
+                            <section className="mb-8 rounded-lg border border-amber-500/20 bg-amber-500/5 overflow-hidden">
                                 <div className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 border-b border-amber-500/10">
                                     <AlertTriangle
                                         size={14}
@@ -133,7 +133,7 @@ export default function LabClient({ lab }: { lab: LabData }) {
                         )}
 
                         {lab.hint && (
-                            <details className="group rounded-lg border border-zinc-800 bg-zinc-900/50 transition-all duration-200 hover:border-zinc-700">
+                            <details className="group rounded-lg border border-zinc-800 bg-zinc-900/50">
                                 <summary className="flex items-center gap-2 cursor-pointer p-3 text-xs font-bold uppercase tracking-widest text-zinc-400 hover:text-zinc-200 transition-colors list-none">
                                     <Lightbulb
                                         size={14}
@@ -156,7 +156,7 @@ export default function LabClient({ lab }: { lab: LabData }) {
                         {lab.id > 1 ? (
                             <Link
                                 href={`/labs/${lab.id - 1}`}
-                                className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-zinc-300 hover:-translate-x-1 active:scale-95 transition-all duration-200"
+                                className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-zinc-300 active:scale-95 transition-colors"
                             >
                                 <ArrowLeft size={14} /> Prev
                             </Link>
@@ -167,14 +167,14 @@ export default function LabClient({ lab }: { lab: LabData }) {
                             {labIds.map((n) => (
                                 <span
                                     key={n}
-                                    className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${n === lab.id ? "bg-blue-500 scale-125" : "bg-zinc-700"}`}
+                                    className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${n === lab.id ? "bg-zinc-200 scale-125" : "bg-zinc-700"}`}
                                 />
                             ))}
                         </div>
                         {lab.id < 3 ? (
                             <Link
                                 href={`/labs/${lab.id + 1}`}
-                                className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-zinc-300 hover:translate-x-1 active:scale-95 transition-all duration-200"
+                                className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-zinc-300 active:scale-95 transition-colors"
                             >
                                 Next <ArrowRight size={14} />
                             </Link>

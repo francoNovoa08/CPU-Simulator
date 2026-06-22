@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Play, Pause, StepForward, RotateCcw, Terminal } from "lucide-react";
+import {
+    Play,
+    Pause,
+    StepForward,
+    RotateCcw,
+    Terminal,
+    Binary,
+} from "lucide-react";
 import AsmEditor from "@/components/AsmEditor";
 import Datapath from "@/components/Datapath";
 import { useCpu } from "@/lib/useCpu";
@@ -54,9 +61,9 @@ export default function EmulatorShell({
                             )}
                             <button
                                 onClick={() => cpu.assemble(source)}
-                                className="flex cursor-pointer items-center gap-1 px-3 py-1.5 rounded bg-blue-600/10 text-blue-400 border border-blue-500/20 hover:bg-blue-600/20 hover:border-blue-500/40 hover:scale-105 active:scale-95 transition-all duration-200 text-xs font-bold uppercase tracking-wider whitespace-nowrap shadow-[0_0_10px_rgba(37,99,235,0.05)]"
+                                className="flex cursor-pointer items-center gap-1 px-3 py-1.5 rounded bg-zinc-100 text-zinc-900 hover:bg-white active:scale-95 transition-colors text-xs font-bold uppercase tracking-wider whitespace-nowrap"
                             >
-                                <Play size={11} fill="currentColor" /> Assemble
+                                <Binary size={16} /> Assemble
                             </button>
                         </div>
                     </div>
@@ -104,9 +111,9 @@ export default function EmulatorShell({
                                 )
                             }
                             disabled={cpu.state.halted}
-                            className={`flex flex-col cursor-pointer items-center justify-center py-2.5 rounded border transition-all duration-200 hover:scale-105 active:scale-95 disabled:opacity-40 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed ${
+                            className={`flex flex-col cursor-pointer items-center justify-center py-2.5 rounded border transition-colors active:scale-95 disabled:opacity-40 disabled:active:scale-100 disabled:cursor-not-allowed ${
                                 cpu.runMode === "slow"
-                                    ? "bg-blue-500/10 border-blue-500/30 text-blue-400 shadow-[inset_0_0_15px_rgba(37,99,235,0.1)]"
+                                    ? "bg-zinc-100 border-zinc-100 text-zinc-900"
                                     : "bg-zinc-900 border-zinc-800 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200"
                             }`}
                         >
@@ -126,9 +133,9 @@ export default function EmulatorShell({
                                 )
                             }
                             disabled={cpu.state.halted}
-                            className={`flex cursor-pointer flex-col items-center justify-center py-2.5 rounded border transition-all duration-200 hover:scale-105 active:scale-95 disabled:opacity-40 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed ${
-                                cpu.runMode === "fast"
-                                    ? "bg-blue-500/10 border-blue-500/30 text-blue-400 shadow-[inset_0_0_15px_rgba(37,99,235,0.1)]"
+                            className={`flex flex-col cursor-pointer items-center justify-center py-2.5 rounded border transition-colors active:scale-95 disabled:opacity-40 disabled:active:scale-100 disabled:cursor-not-allowed ${
+                                cpu.runMode === "slow"
+                                    ? "bg-zinc-100 border-zinc-100 text-zinc-900"
                                     : "bg-zinc-900 border-zinc-800 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200"
                             }`}
                         >
@@ -146,7 +153,7 @@ export default function EmulatorShell({
                             disabled={
                                 cpu.state.halted || cpu.runMode !== "paused"
                             }
-                            className="flex cursor-pointer flex-col items-center justify-center py-2.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200 transition-all duration-200 hover:scale-105 active:scale-95 disabled:opacity-40 disabled:hover:scale-100 disabled:active:scale-100 disabled:cursor-not-allowed"
+                            className="flex cursor-pointer flex-col items-center justify-center py-2.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200 transition-colors active:scale-95 disabled:opacity-40 disabled:active:scale-100 disabled:cursor-not-allowed"
                         >
                             <StepForward size={16} />
                             <span className="text-[10px] font-semibold mt-1">
@@ -200,18 +207,18 @@ export default function EmulatorShell({
                             Internal State
                         </span>
                         <div className="grid grid-cols-2 gap-2 mb-2">
-                            <div className="bg-zinc-900/50 border border-zinc-800/60 rounded p-2 flex flex-col items-center transition-colors hover:bg-zinc-800/40 duration-200">
+                            <div className="bg-zinc-900/50 border border-zinc-800/60 rounded p-2 flex flex-col items-center">
                                 <span className="text-[10px] text-zinc-500 font-bold mb-1">
                                     PC
                                 </span>
-                                <span className="font-mono text-sm text-blue-400">
+                                <span className="font-mono text-sm text-zinc-300">
                                     {cpu.state.pc
                                         .toString(16)
                                         .toUpperCase()
                                         .padStart(4, "0")}
                                 </span>
                             </div>
-                            <div className="bg-zinc-900/50 border border-zinc-800/60 rounded p-2 flex flex-col items-center transition-colors hover:bg-zinc-800/40 duration-200">
+                            <div className="bg-zinc-900/50 border border-zinc-800/60 rounded p-2 flex flex-col items-center">
                                 <span className="text-[10px] text-zinc-500 font-bold mb-1">
                                     IR
                                 </span>
@@ -223,7 +230,7 @@ export default function EmulatorShell({
                                 </span>
                             </div>
                         </div>
-                        <div className="bg-zinc-900/50 border border-zinc-800/60 rounded p-2 flex items-center justify-between px-4 transition-colors hover:bg-zinc-800/40 duration-200">
+                        <div className="bg-zinc-900/50 border border-zinc-800/60 rounded p-2 flex items-center justify-between px-4">
                             <span className="text-[10px] text-zinc-500 font-bold">
                                 Z FLAG
                             </span>

@@ -1,15 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function LabsLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const pathname = usePathname();
+    const activeLab = pathname?.match(/\/labs\/(\d+)/)?.[1];
+
     return (
         <div className="flex h-screen flex-col bg-[#0d0d0f] text-zinc-300">
-            {/* Global scrollbar styling injected here so it applies to child components */}
             <style
                 dangerouslySetInnerHTML={{
                     __html: `
@@ -34,12 +37,11 @@ export default function LabsLayout({
             <nav className="flex shrink-0 items-center gap-6 border-b border-zinc-800/60 bg-[#121214] px-6 py-3">
                 <Link
                     href="/"
-                    className="text-sm font-bold uppercase tracking-widest text-blue-500 hover:text-blue-400 hover:scale-105 active:scale-95 transition-all duration-200"
+                    className="text-sm font-bold uppercase tracking-widest text-zinc-200 hover:text-white transition-colors"
                 >
                     Home
                 </Link>
-                <div className="h-4 w-px bg-zinc-800/80" />{" "}
-                {/* Subtle separator */}
+                <div className="h-4 w-px bg-zinc-800/80" />
                 <span className="text-xs font-bold uppercase tracking-widest text-zinc-600">
                     Labs
                 </span>
@@ -48,7 +50,11 @@ export default function LabsLayout({
                         <Link
                             key={n}
                             href={`/labs/${n}`}
-                            className="rounded px-3 py-1 text-xs font-medium text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200"
+                            className={`rounded px-3 py-1 text-xs font-medium transition-colors active:scale-95 ${
+                                String(n) === activeLab
+                                    ? "bg-zinc-800 text-zinc-100"
+                                    : "text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200"
+                            }`}
                         >
                             Lab {n}
                         </Link>
@@ -57,7 +63,7 @@ export default function LabsLayout({
                 <div className="ml-auto">
                     <Link
                         href="/emulator"
-                        className="rounded bg-blue-600/10 border border-blue-500/20 px-4 py-1.5 text-sm font-bold uppercase tracking-widest text-blue-400 hover:bg-blue-600/20 hover:border-blue-500/40 hover:text-blue-300 hover:scale-105 active:scale-95 transition-all duration-200 shadow-[0_0_15px_rgba(37,99,235,0.05)] hover:shadow-[0_0_20px_rgba(37,99,235,0.1)] block"
+                        className="block rounded bg-zinc-100 px-4 py-1.5 text-sm font-bold uppercase tracking-widest text-zinc-900 transition-colors hover:bg-white active:scale-95"
                     >
                         Open Emulator
                     </Link>
