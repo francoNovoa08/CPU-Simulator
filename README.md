@@ -15,6 +15,9 @@ All instructions are 16 bits wide. Three encoding formats:
 | R | `OPCODE[15:12] \| RD[11:9] \| RS1[8:6] \| RS2[5:3] \| 000` | ADD SUB AND OR NOT LOAD STORE |
 | I | `OPCODE[15:12] \| RD[11:9] \| RS1[8:6] \| IMM6[5:0]` | LOADI ADDI |
 | J | `OPCODE[15:12] \| 000 \| ADDR9[8:0]` | JMP JMPZ |
+| N | `OPCODE[15:12] \| 000000000000` | HALT |
+
+HALT takes no operands and stops the fetch-decode-execute loop; every subsequent `step()` call is a no-op until the CPU is reset.
 
 R0 is hardwired zero. Writes to R0 are silently discarded, reads always return 0. This eliminates a dedicated CLEAR instruction and encodes NOP as `ADD R0 R0 R0`.
 
